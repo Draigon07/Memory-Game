@@ -141,13 +141,12 @@ function Cards() {
     } else {
       toBeChecked(id);
     }
-    console.log(id);
   }
 
   const Mapper = items.map((el, index) => {
     return <Card key={index} item={el} id={index} handleClick={handleClick} />;
   });
-  console.log("render");
+
   return <div className="container">{Mapper}</div>;
 }
 

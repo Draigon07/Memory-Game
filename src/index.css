@@ -81,7 +81,9 @@ h1 {
   background: #4caf50;
 }
 
-.card.active picture {
+.card.active picture,
+.card.wrong picture,
+.card.correct picture {
   text-align: center;
   align-items: center;
   transform: scale(1);
