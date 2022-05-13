@@ -44,7 +44,7 @@ h1 {
 
 .card picture {
   transform: scale(0);
-  animation: 2s hideImage linear;
+  animation: 3s hideImage linear;
   transition: transform 0.5s;
 }
 
@@ -70,10 +70,15 @@ h1 {
 
 .card.active {
   transform: rotateY(0);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
+  background-color: rgb(228, 225, 225);
+}
+
+.card.wrong {
+  background-color: rgb(228, 4, 4);
+}
+
+.card.correct {
+  background: #4caf50;
 }
 
 .card.active picture {

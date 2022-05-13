@@ -1,100 +1,108 @@
-import { useState } from "react";
-import "boxicons";
+import { useEffect, useState } from "react";
 
-function Card({ item, handleClick }) {
-  const itemClass = item.stat ? `active${item.stat}` : "";
+function Card({ item, handleClick, id }) {
+  const itemClass = item.stat ? `${item.stat}` : "";
   return (
-    <div className={`card${itemClass}`} onClick={() => handleClick(item.id)}>
+    <div className={`card ${itemClass}`} onClick={() => handleClick(id)}>
       <picture>{item.comp}</picture>
     </div>
   );
 }
 
 function Cards() {
+  const STYLES = {
+    fontSize: "3rem",
+  };
   const [items, setItems] = useState(
     [
       {
         id: 1,
-        comp: <box-icon type="logo" name="postgresql"></box-icon>,
+        comp: <i style={STYLES} class="bx bxl-postgresql"></i>,
         stat: "",
       },
       {
         id: 1,
-        comp: <box-icon type="logo" name="postgresql"></box-icon>,
+        comp: <i style={STYLES} class="bx bxl-postgresql"></i>,
         stat: "",
       },
       {
         id: 2,
-        comp: (
-          <box-icon type="logo" color="purple" name="discord-alt"></box-icon>
-        ),
+        comp: <i style={STYLES} class="bx bxl-discord-alt"></i>,
         stat: "",
       },
       {
         id: 2,
+        comp: <i style={STYLES} class="bx bxl-discord-alt"></i>,
+        stat: "",
+      },
+      {
+        id: 3,
+        comp: <i style={STYLES} class="bx bxl-instagram-alt"></i>,
+        stat: "",
+      },
+      {
+        id: 3,
+        comp: <i style={STYLES} class="bx bxl-instagram-alt"></i>,
+        stat: "",
+      },
+      {
+        id: 4,
+        comp: <i style={STYLES} class="bx bxl-windows"></i>,
+        stat: "",
+      },
+      {
+        id: 4,
+        comp: <i style={STYLES} class="bx bxl-windows"></i>,
+        stat: "",
+      },
+      {
+        id: 5,
+        comp: <i style={STYLES} class="bx bxl-react"></i>,
+        stat: "",
+      },
+      {
+        id: 5,
+        comp: <i style={STYLES} class="bx bxl-react"></i>,
+        stat: "",
+      },
+      {
+        id: 6,
+        comp: <i style={STYLES} class="bx bxl-snapchat"></i>,
+        stat: "",
+      },
+      {
+        id: 6,
+        comp: <i style={STYLES} class="bx bxl-snapchat"></i>,
+        stat: "",
+      },
+      {
+        id: 7,
+        comp: <i style={STYLES} class="bx bxl-baidu"></i>,
+        stat: "",
+      },
+      {
+        id: 7,
+        comp: <i style={STYLES} class="bx bxl-baidu"></i>,
+        stat: "",
+      },
+      {
+        id: 8,
         comp: (
-          <box-icon type="logo" color="purple" name="discord-alt"></box-icon>
+          <i
+            class="bx bxl-html5"
+            style={{ color: "orange", fontSize: "3rem" }}
+          ></i>
         ),
         stat: "",
       },
       {
-        id: 3,
-        comp: <box-icon type="logo" name="instagram"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 3,
-        comp: <box-icon type="logo" name="instagram"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 4,
-        comp: <box-icon type="logo" name="windows"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 4,
-        comp: <box-icon type="logo" name="windows"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 5,
-        comp: <box-icon type="logo" name="react"></box-icon>,
-        stat: "active",
-      },
-      {
-        id: 5,
-        comp: <box-icon type="logo" name="react"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 6,
-        comp: <box-icon type="logo" name="snapchat"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 6,
-        comp: <box-icon type="logo" name="snapchat"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 7,
-        comp: <box-icon type="logo" name="baidu"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 7,
-        comp: <box-icon type="logo" name="baidu"></box-icon>,
-        stat: "",
-      },
-      {
         id: 8,
-        comp: <box-icon type="logo" color="orange" name="html5"></box-icon>,
-        stat: "",
-      },
-      {
-        id: 8,
-        comp: <box-icon type="logo" color="orange" name="html5"></box-icon>,
+        comp: (
+          <i
+            class="bx bxl-html5"
+            style={{ color: "orange", fontSize: "3rem" }}
+          ></i>
+        ),
         stat: "",
       },
     ].sort(() => Math.random() - 0.5)
@@ -102,16 +110,45 @@ function Cards() {
 
   const [prev, setPrev] = useState(-1);
 
-  function handleClick(id) {
-    alert(id);
+  function toBeChecked(current) {
+    if (items[current].id === items[prev].id) {
+      items[current].stat = "correct";
+      items[prev].stat = "correct";
+      setItems([...items]);
+      setPrev(-1);
+    } else {
+      items[current].stat = "wrong";
+      items[prev].stat = "wrong";
+      setItems([...items]);
+      setTimeout(() => {
+        items[current].stat = "";
+        items[prev].stat = "";
+        setItems([...items]);
+        setPrev(-1);
+      }, 1000);
+    }
   }
-  return (
-    <div className="container">
-      {items.map((el, index) => (
-        <Card key={index} item={el} handleClick={handleClick} />
-      ))}
-    </div>
-  );
+
+  useEffect(() => {
+    console.log("Changed");
+  }, [items]);
+
+  function handleClick(id) {
+    if (prev === -1) {
+      items[id].stat = "active";
+      setItems([...items]);
+      setPrev(id);
+    } else {
+      toBeChecked(id);
+    }
+    console.log(id);
+  }
+
+  const Mapper = items.map((el, index) => {
+    return <Card key={index} item={el} id={index} handleClick={handleClick} />;
+  });
+  console.log("render");
+  return <div className="container">{Mapper}</div>;
 }
 
 export default Cards;
