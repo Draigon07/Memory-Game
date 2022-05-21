@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 
-function Card({ item, handleClick, id }) {
+function Card({ item, handleClick, id, start }) {
   const itemClass = item.stat ? `${item.stat}` : "";
   return (
-    <div className={`card ${itemClass}`} onClick={() => handleClick(id)}>
+    <div
+      className={`card ${itemClass}`}
+      onClick={() => (start == true ? handleClick(id) : null)}
+    >
       <picture>{item.comp}</picture>
     </div>
   );
 }
 
-function Cards() {
+function Cards({ start }) {
   const STYLES = {
     fontSize: "3rem",
   };
@@ -144,7 +147,15 @@ function Cards() {
   }
 
   const Mapper = items.map((el, index) => {
-    return <Card key={index} item={el} id={index} handleClick={handleClick} />;
+    return (
+      <Card
+        key={index}
+        item={el}
+        id={index}
+        handleClick={handleClick}
+        start={start}
+      />
+    );
   });
 
   return <div className="container">{Mapper}</div>;
