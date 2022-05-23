@@ -12,7 +12,7 @@ function Card({ item, handleClick, id, start }) {
   );
 }
 
-function Cards({ start }) {
+function Cards({ start, setPoints, correctOnes, setCorrectOnes }) {
   const STYLES = {
     fontSize: "3rem",
   };
@@ -117,11 +117,14 @@ function Cards({ start }) {
     if (items[current].id === items[prev].id) {
       items[current].stat = "correct";
       items[prev].stat = "correct";
+      setPoints((points) => points + 1);
+      setCorrectOnes((corr) => corr + 1);
       setItems([...items]);
       setPrev(-1);
     } else {
       items[current].stat = "wrong";
       items[prev].stat = "wrong";
+      setPoints((points) => (points > 0 ? points - 1 : points));
       setItems([...items]);
       setTimeout(() => {
         items[current].stat = "";
@@ -133,10 +136,11 @@ function Cards({ start }) {
   }
 
   useEffect(() => {
-    console.log("Changed");
+    console.log(correctOnes);
   }, [items]);
 
   function handleClick(id) {
+    if (items[id].stat == "correct") return null;
     if (prev === -1) {
       items[id].stat = "active";
       setItems([...items]);
