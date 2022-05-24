@@ -13,8 +13,12 @@ function Counter({ startRemaining, setStart, pointsCount, correctOnes }) {
 
   useEffect(() => {
     if (countDown.minutes == "0" && countDown.seconds == "0")
-      setPlayerStatus({ winner: false, losser: true });
-    if (correctOnes == 8) setStart((st) => !st);
+      setStart((st) => !st);
+    setPlayerStatus({ winner: false, losser: true });
+    if (correctOnes == 8) {
+      setStart((st) => !st);
+      setPlayerStatus({ winner: true, losser: false });
+    }
   }, [countDown]);
 
   useEffect(() => {
