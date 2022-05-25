@@ -4,20 +4,22 @@ const defaultCountDown = {
   seconds: "30",
   minutes: "01",
 };
-function Counter({ startRemaining, setStart, pointsCount, correctOnes }) {
+function Counter({
+  startRemaining,
+  setStart,
+  pointsCount,
+  correctOnes,
+  setModalStatus,
+}) {
   const [countDown, setCountDown] = useState(defaultCountDown);
-  const [playerStatus, setPlayerStatus] = useState({
-    winner: false,
-    losser: false,
-  });
 
   useEffect(() => {
     if (countDown.minutes == "0" && countDown.seconds == "0")
       setStart((st) => !st);
-    setPlayerStatus({ winner: false, losser: true });
+
     if (correctOnes == 8) {
       setStart((st) => !st);
-      setPlayerStatus({ winner: true, losser: false });
+      setModalStatus((sta) => !sta);
     }
   }, [countDown]);
 
